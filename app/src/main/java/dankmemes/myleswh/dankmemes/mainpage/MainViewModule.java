@@ -3,6 +3,7 @@ package dankmemes.myleswh.dankmemes.mainpage;
 import dagger.Module;
 import dagger.Provides;
 import dankmemes.myleswh.dankmemes.application.CustomScope;
+import retrofit2.Retrofit;
 
 /**
  * Created by myleswh on 06/06/2017.
@@ -24,8 +25,8 @@ public class MainViewModule {
 
     @Provides
     @CustomScope
-    public MainActivityContract.Presenter provideProfilePresenter() {
-        return new MainPresenter(view);
+    public MainActivityContract.Presenter provideProfilePresenter(Retrofit retrofit) {
+        return new MainPresenter(view, retrofit);
     }
 
 }

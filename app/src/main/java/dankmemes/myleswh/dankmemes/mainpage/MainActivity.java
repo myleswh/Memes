@@ -11,6 +11,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dankmemes.myleswh.dankmemes.R;
+import dankmemes.myleswh.dankmemes.application.DankApplication;
 
 public class MainActivity extends AppCompatActivity implements MainActivityContract.View {
 
@@ -27,7 +28,10 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
     }
 
     private void inject() {
-        DaggerMainViewComponent.builder().mainViewModule(new MainViewModule(this)).build().inject(this);
+        DaggerMainViewComponent.builder()
+                .mainViewModule(new MainViewModule(this))
+                .networkComponent(((DankApplication)getApplication()).getNetworkComponent())
+                .build().inject(this);
     }
 
     @Override
