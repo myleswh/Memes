@@ -1,9 +1,8 @@
-package dankmemes.myleswh.dankmemes.dagger;
+package dankmemes.myleswh.dankmemes.application;
 
 import javax.inject.Singleton;
 
 import dagger.Component;
-import dankmemes.myleswh.dankmemes.DankApplication;
 
 /**
  * Created by myleswh on 06/06/2017.
@@ -11,5 +10,4 @@ import dankmemes.myleswh.dankmemes.DankApplication;
 @Singleton
 @Component(modules = ApplicationModule.class)
 public interface ApplicationComponent {
-    void inject(DankApplication application);
 }

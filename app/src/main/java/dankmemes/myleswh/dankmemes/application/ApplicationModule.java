@@ -1,4 +1,4 @@
-package dankmemes.myleswh.dankmemes.dagger;
+package dankmemes.myleswh.dankmemes.application;
 
 import android.content.Context;
 
@@ -6,7 +6,6 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import dankmemes.myleswh.dankmemes.DankApplication;
 
 /**
  * Created by myleswh on 06/06/2017.
