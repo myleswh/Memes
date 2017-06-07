@@ -4,6 +4,7 @@ import dagger.Module;
 import dagger.Provides;
 import dankmemes.myleswh.dankmemes.application.CustomScope;
 import dankmemes.myleswh.dankmemes.network.GalleryAPI;
+import dankmemes.myleswh.dankmemes.utils.OnItemClickListener;
 import retrofit2.Retrofit;
 
 /**
@@ -13,9 +14,11 @@ import retrofit2.Retrofit;
 public class MainViewModule {
 
     private MainActivityContract.View view;
+    private OnItemClickListener onItemClickListener;
 
-    public MainViewModule( MainActivityContract.View view) {
+    public MainViewModule(MainActivityContract.View view, OnItemClickListener onItemClickListener) {
         this.view = view;
+        this.onItemClickListener = onItemClickListener;
     }
 
     @Provides
@@ -26,14 +29,20 @@ public class MainViewModule {
 
     @Provides
     @CustomScope
+    public OnItemClickListener provideOnItemClickListener() {
+        return onItemClickListener;
+    }
+
+    @Provides
+    @CustomScope
     public MainActivityContract.Presenter provideProfilePresenter(GalleryAPI galleryAPI) {
         return new MainPresenter(view, galleryAPI);
     }
 
     @Provides
     @CustomScope
-    public MainAdapter provideMainAdapter() {
-        return new MainAdapter();
+    public MainAdapter provideMainAdapter(OnItemClickListener onItemClickListener) {
+        return new MainAdapter(onItemClickListener);
     }
 
 }

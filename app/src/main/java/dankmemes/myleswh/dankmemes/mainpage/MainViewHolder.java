@@ -6,6 +6,7 @@ import android.widget.ImageView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dankmemes.myleswh.dankmemes.utils.OnItemClickListener;
 import dankmemes.myleswh.dankmemes.R;
 
 /**
@@ -16,9 +17,15 @@ public class MainViewHolder extends RecyclerView.ViewHolder {
 
     @BindView(R.id.iv) ImageView imageView;
 
-    public MainViewHolder(View itemView) {
+    public MainViewHolder(View itemView, final OnItemClickListener onItemClickListener) {
         super(itemView);
         ButterKnife.bind(this, itemView);
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemClickListener.onItemClick(getLayoutPosition());
+            }
+        });
     }
 
     public ImageView getImageView() {

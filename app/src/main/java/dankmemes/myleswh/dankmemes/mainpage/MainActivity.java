@@ -1,5 +1,6 @@
 package dankmemes.myleswh.dankmemes.mainpage;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -7,17 +8,18 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dankmemes.myleswh.dankmemes.utils.OnItemClickListener;
 import dankmemes.myleswh.dankmemes.R;
 import dankmemes.myleswh.dankmemes.application.DankApplication;
+import dankmemes.myleswh.dankmemes.utils.ShareUtils;
 
-public class MainActivity extends AppCompatActivity implements MainActivityContract.View {
+public class MainActivity extends AppCompatActivity implements MainActivityContract.View, OnItemClickListener {
 
     @BindView(R.id.rvMain) RecyclerView recyclerView;
     @BindView(R.id.pbLoading) View pbLoading;
@@ -68,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
 
     private void inject() {
         DaggerMainViewComponent.builder()
-                .mainViewModule(new MainViewModule(this))
+                .mainViewModule(new MainViewModule(this, this))
                 .networkComponent(((DankApplication)getApplication()).getNetworkComponent())
                 .build().inject(this);
     }
@@ -98,5 +100,15 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
     protected void onDestroy() {
         super.onDestroy();
         presenter.dispose();
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        share(position);
+    }
+
+    private void share(int position) {
+        String url = mainAdapter.getItem(position);
+        ShareUtils.shareUrl(this, url);
     }
 }
