@@ -43,6 +43,11 @@ public class MainAdapter extends RecyclerView.Adapter<MainViewHolder> {
         notifyDataSetChanged();
     }
 
+    public void clearImages() {
+        this.items.clear();
+        notifyDataSetChanged();
+    }
+
     public int getListSize() {
         return items.size();
     }

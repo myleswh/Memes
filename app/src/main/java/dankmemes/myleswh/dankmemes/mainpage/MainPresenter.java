@@ -36,12 +36,13 @@ public class MainPresenter implements MainActivityContract.Presenter {
 
     @Override
     public void loadImageUrls() {
-        loadImages(currentPage);
+        currentPage = 0;
+        loadImages(currentPage, true);
     }
 
 
-    private void loadImages(final int page) {
-        // If already running Ignore
+    private void loadImages(final int page, final boolean clear) {
+        // If already running Ignore TODO find more elegant way to do this?
         if (networkDisposable!=null && !networkDisposable.isDisposed()) return;
 
         galleryAPI.loadGallery(page)
@@ -95,6 +96,7 @@ public class MainPresenter implements MainActivityContract.Presenter {
 
                     @Override
                     public void onSuccess(List<String> objects) {
+                        if (clear) view.clearImageUrls();
                         view.addImages(objects);
                         currentPage = page + 1;
                     }
@@ -108,11 +110,13 @@ public class MainPresenter implements MainActivityContract.Presenter {
 
     @Override
     public void loadMoreImages() {
-        loadImages(currentPage);
+        loadImages(currentPage, false);
     }
 
     @Override
     public void dispose() {
-        //compositeDisposable.dispose();
+        if (networkDisposable!= null && !networkDisposable.isDisposed()) {
+            networkDisposable.dispose();
+        }
     }
 }

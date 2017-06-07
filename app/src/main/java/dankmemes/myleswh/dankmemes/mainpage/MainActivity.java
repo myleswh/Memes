@@ -1,6 +1,7 @@
 package dankmemes.myleswh.dankmemes.mainpage;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
 
     @BindView(R.id.rvMain) RecyclerView recyclerView;
     @BindView(R.id.pbLoading) View pbLoading;
+    @BindView(R.id.swipeRefresh) SwipeRefreshLayout swipeRefreshLayout;
     @Inject MainActivityContract.Presenter presenter;
     @Inject MainAdapter mainAdapter;
 
@@ -34,6 +36,20 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
     }
 
     private void initView() {
+        initRecyclerView();
+        initSwipeRefresh();
+    }
+
+    private void initSwipeRefresh() {
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                presenter.loadImageUrls();
+            }
+        });
+    }
+
+    private void initRecyclerView() {
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
@@ -59,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
 
     @Override
     public void clearImageUrls() {
-        mainAdapter.addImages(new ArrayList<String>());
+        mainAdapter.clearImages();
     }
 
     @Override
@@ -70,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
     @Override
     public void setLoading(boolean loading) {
         pbLoading.setVisibility(loading ? View.VISIBLE : View.GONE);
+        if (!loading) swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
