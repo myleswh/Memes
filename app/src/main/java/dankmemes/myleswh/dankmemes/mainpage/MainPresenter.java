@@ -32,6 +32,9 @@ public class MainPresenter implements MainActivityContract.Presenter {
 
     @Override
     public void loadImageUrls() {
+
+        view.setLoading(true);
+
         galleryAPI.loadGallery()
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.computation())
@@ -70,14 +73,21 @@ public class MainPresenter implements MainActivityContract.Presenter {
                     @Override
                     public void onSuccess(List<String> objects) {
                         view.setImageUrls(objects);
+                        view.setLoading(false);
                     }
 
                     @Override
                     public void onError(Throwable e) {
+                        view.setLoading(false);
                         // TODO
                         e.printStackTrace();
                     }
                 });
 
+    }
+
+    @Override
+    public void dispose() {
+        compositeDisposable.dispose();
     }
 }

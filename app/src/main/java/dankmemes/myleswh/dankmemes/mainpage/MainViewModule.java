@@ -30,4 +30,10 @@ public class MainViewModule {
         return new MainPresenter(view, galleryAPI);
     }
 
+    @Provides
+    @CustomScope
+    public MainAdapter provideMainAdapter() {
+        return new MainAdapter();
+    }
+
 }

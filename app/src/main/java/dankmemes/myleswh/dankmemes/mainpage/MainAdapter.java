@@ -4,6 +4,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +17,7 @@ import dankmemes.myleswh.dankmemes.R;
 
 public class MainAdapter extends RecyclerView.Adapter<MainViewHolder> {
 
-    List<String> items = new ArrayList<String>;
+    List<String> items = new ArrayList<>();
 
     @Override
     public MainViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -26,9 +28,9 @@ public class MainAdapter extends RecyclerView.Adapter<MainViewHolder> {
 
     @Override
     public void onBindViewHolder(MainViewHolder holder, int position) {
-        String item = items.get(position)
+        String item = items.get(position);
 
-        //holder.getV
+        Glide.with(holder.imageView).load(item).into(holder.imageView);
     }
 
     @Override
