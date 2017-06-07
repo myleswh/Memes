@@ -29,8 +29,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainViewHolder> {
     @Override
     public void onBindViewHolder(MainViewHolder holder, int position) {
         String item = items.get(position);
-
-        Glide.with(holder.imageView).load(item).into(holder.imageView);
+        Glide.with(holder.getImageView()).load(item).into(holder.getImageView());
     }
 
     @Override

@@ -8,6 +8,7 @@ import dankmemes.myleswh.dankmemes.network.GalleryAPI;
 import dankmemes.myleswh.dankmemes.network.GalleryModel;
 import io.reactivex.Observable;
 import io.reactivex.SingleObserver;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -64,6 +65,7 @@ public class MainPresenter implements MainActivityContract.Presenter {
                     }
                 })
                 .toList()
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SingleObserver<List<String>>() {
                     @Override
                     public void onSubscribe(Disposable d) {

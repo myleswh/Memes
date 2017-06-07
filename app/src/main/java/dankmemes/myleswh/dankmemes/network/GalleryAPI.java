@@ -6,6 +6,6 @@ import retrofit2.http.Headers;
 
 public interface GalleryAPI {
     @Headers("Authorization: Client-ID " + RetrofitUtils.PUBLIC_KEY)
-    @GET("3/gallery/r/dankmemes/new/0.json") // SubReddit set from flavour
+    @GET("3/gallery/r/dankmemes/new/0.json") //
     public Single<GalleryModel> loadGallery();
 }
