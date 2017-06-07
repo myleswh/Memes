@@ -38,8 +38,12 @@ public class MainAdapter extends RecyclerView.Adapter<MainViewHolder> {
     }
 
 
-    public void setItems(List<String> items) {
-        this.items = items;
+    public void addImages(List<String> items) {
+        this.items.addAll(items);
         notifyDataSetChanged();
+    }
+
+    public int getListSize() {
+        return items.size();
     }
 }

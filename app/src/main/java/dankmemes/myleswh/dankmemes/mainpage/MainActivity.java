@@ -34,9 +34,20 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
     }
 
     private void initView() {
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(mainAdapter);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (linearLayoutManager.findLastVisibleItemPosition() == mainAdapter.getItemCount() - 1) {
+                    presenter.loadMoreImages();
+                }
+
+            }
+        });
     }
 
     private void inject() {
@@ -48,12 +59,12 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
 
     @Override
     public void clearImageUrls() {
-        mainAdapter.setItems(new ArrayList<String>());
+        mainAdapter.addImages(new ArrayList<String>());
     }
 
     @Override
-    public void setImageUrls(List<String> urls) {
-        mainAdapter.setItems(urls);
+    public void addImages(List<String> urls) {
+        mainAdapter.addImages(urls);
     }
 
     @Override

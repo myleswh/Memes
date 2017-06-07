@@ -12,6 +12,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
+import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
@@ -23,7 +25,8 @@ public class MainPresenter implements MainActivityContract.Presenter {
 
     private MainActivityContract.View view;
     private GalleryAPI galleryAPI;
-    private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private int currentPage = 0;
+    private Disposable networkDisposable;
 
     @Inject
     public MainPresenter(MainActivityContract.View view, GalleryAPI galleryAPI) {
@@ -33,10 +36,15 @@ public class MainPresenter implements MainActivityContract.Presenter {
 
     @Override
     public void loadImageUrls() {
+        loadImages(currentPage);
+    }
 
-        view.setLoading(true);
 
-        galleryAPI.loadGallery()
+    private void loadImages(final int page) {
+        // If already running Ignore
+        if (networkDisposable!=null && !networkDisposable.isDisposed()) return;
+
+        galleryAPI.loadGallery(page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.computation())
                 .map(new Function<GalleryModel, List<GalleryModel.Datum>>() {
@@ -66,30 +74,45 @@ public class MainPresenter implements MainActivityContract.Presenter {
                 })
                 .toList()
                 .observeOn(AndroidSchedulers.mainThread())
+                .doAfterTerminate(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        networkDisposable.dispose();
+                        view.setLoading(false);
+                    }
+                })
+                .doOnSubscribe(new Consumer<Disposable>() {
+                    @Override
+                    public void accept(@NonNull Disposable disposable) throws Exception {
+                        view.setLoading(true);
+                    }
+                })
                 .subscribe(new SingleObserver<List<String>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-                        compositeDisposable.add(d);
+                        networkDisposable = d;
                     }
 
                     @Override
                     public void onSuccess(List<String> objects) {
-                        view.setImageUrls(objects);
-                        view.setLoading(false);
+                        view.addImages(objects);
+                        currentPage = page + 1;
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        view.setLoading(false);
-                        // TODO
                         e.printStackTrace();
                     }
                 });
+    }
 
+    @Override
+    public void loadMoreImages() {
+        loadImages(currentPage);
     }
 
     @Override
     public void dispose() {
-        compositeDisposable.dispose();
+        //compositeDisposable.dispose();
     }
 }
