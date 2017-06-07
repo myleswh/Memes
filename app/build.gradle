@@ -22,6 +22,7 @@ android {
 dependencies {
     String appcompat_version = '25.3.1'
     String retrofit_version = '2.3.0'
+    String glide_version = '4.0.0-RC0'
 
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -46,4 +47,8 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:' + retrofit_version
     compile 'com.squareup.retrofit2:converter-gson:' + retrofit_version
     compile 'com.squareup.retrofit2:adapter-rxjava2:' + retrofit_version
+    // Image Library
+    compile 'com.github.bumptech.glide:glide:' + glide_version
+    annotationProcessor 'com.github.bumptech.glide:compiler:' + glide_version
+
 }

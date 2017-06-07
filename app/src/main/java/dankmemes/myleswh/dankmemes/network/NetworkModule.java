@@ -16,4 +16,12 @@ public class NetworkModule {
     public Retrofit provideRetrofit() {
         return RetrofitUtils.getRetrofit();
     }
+
+
+    @Singleton
+    @Provides
+    public GalleryAPI provideGalleryAPI(Retrofit retrofit) {
+        return retrofit.create(GalleryAPI.class);
+    }
+
 }
