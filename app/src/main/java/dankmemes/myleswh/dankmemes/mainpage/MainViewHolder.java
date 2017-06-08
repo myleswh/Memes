@@ -16,6 +16,7 @@ import dankmemes.myleswh.dankmemes.R;
 public class MainViewHolder extends RecyclerView.ViewHolder {
 
     @BindView(R.id.iv) ImageView imageView;
+    @BindView(R.id.pbLoading) View pbLoading;
 
     public MainViewHolder(View itemView, final OnItemClickListener onItemClickListener) {
         super(itemView);
@@ -30,5 +31,9 @@ public class MainViewHolder extends RecyclerView.ViewHolder {
 
     public ImageView getImageView() {
         return imageView;
+    }
+
+    public View getPbLoading() {
+        return pbLoading;
     }
 }

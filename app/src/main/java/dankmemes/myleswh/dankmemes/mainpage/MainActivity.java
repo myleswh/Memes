@@ -1,6 +1,5 @@
 package dankmemes.myleswh.dankmemes.mainpage;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -14,9 +13,9 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import dankmemes.myleswh.dankmemes.utils.OnItemClickListener;
 import dankmemes.myleswh.dankmemes.R;
 import dankmemes.myleswh.dankmemes.application.DankApplication;
+import dankmemes.myleswh.dankmemes.utils.OnItemClickListener;
 import dankmemes.myleswh.dankmemes.utils.ShareUtils;
 
 public class MainActivity extends AppCompatActivity implements MainActivityContract.View, OnItemClickListener {
