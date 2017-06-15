@@ -1,13 +1,10 @@
 package dankmemes.myleswh.dankmemes.mainpage;
 
-import android.content.Context;
-
 import java.util.List;
 
 import javax.inject.Inject;
 
-import dankmemes.myleswh.dankmemes.database.LocalDBHelper;
-import dankmemes.myleswh.dankmemes.database.LocalDBHelperRx;
+import dankmemes.myleswh.dankmemes.database.DBHelper;
 import dankmemes.myleswh.dankmemes.network.GalleryAPI;
 import dankmemes.myleswh.dankmemes.network.GalleryModel;
 import io.reactivex.Observable;
@@ -28,22 +25,24 @@ import io.reactivex.schedulers.Schedulers;
 
     private MainActivityContract.View view;
     private GalleryAPI galleryAPI;
+    private DBHelper dbHelper;
     private int currentPage = 0;
     private Disposable networkDisposable;
 
     @Inject
-    public MainPresenter(MainActivityContract.View view, GalleryAPI galleryAPI) {
+    public MainPresenter(MainActivityContract.View view, GalleryAPI galleryAPI, DBHelper dbHelper) {
         this.view = view;
         this.galleryAPI = galleryAPI;
+        this.dbHelper = dbHelper;
     }
 
     @Override
-    public void loadImageUrls(Context context) {
+    public void loadImageUrls() {
         currentPage = 0;
-        loadImages(context, currentPage, true);
+        loadImages(currentPage, true);
     }
 
-    private void loadImages(final Context context, final int page, final boolean clear) {
+    private void loadImages(final int page, final boolean clear) {
         // If already running Ignore TODO find more elegant way to do this?
         if (networkDisposable!=null && !networkDisposable.isDisposed()) return;
 
@@ -77,9 +76,9 @@ import io.reactivex.schedulers.Schedulers;
                 })
                 .filter(new Predicate<String>() {
                     @Override
-                    public boolean test(@NonNull String s) throws Exception {
+                    public boolean test(@NonNull String url) throws Exception {
                         // Filter seen images
-                        return !LocalDBHelper.hasSeenImage(context, s);
+                        return !dbHelper.hasSeenImage(url);
                     }
                 })
                 .toList()
@@ -118,8 +117,8 @@ import io.reactivex.schedulers.Schedulers;
     }
 
     @Override
-    public void loadMoreImages(Context context) {
-        loadImages(context, currentPage, false);
+    public void loadMoreImages() {
+        loadImages(currentPage, false);
     }
 
     @Override
@@ -130,18 +129,18 @@ import io.reactivex.schedulers.Schedulers;
     }
 
     @Override
-    public void markViewed(Context context, String url) {
-        LocalDBHelperRx.getInsertObservable(context, url).subscribe();
+    public void markViewed(String url) {
+        dbHelper.getInsertObservable(url).subscribe();
     }
 
     @Override
-    public void clearViewed(Context context) {
-        LocalDBHelperRx.getClearObservable(context).subscribe();
+    public void clearViewed() {
+        dbHelper.getClearObserable().subscribe();
     }
 
     @Override
     public void setShowViewed(boolean showViewed) {
-
+        // TOOD
     }
 
 }

@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
         ButterKnife.bind(this);
         inject();
         initView();
-        presenter.loadImageUrls(this);
+        presenter.loadImageUrls();
     }
 
     private void initView() {
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                presenter.loadImageUrls(MainActivity.this);
+                presenter.loadImageUrls();
             }
         });
     }
@@ -61,13 +61,13 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
                 super.onScrollStateChanged(recyclerView, newState);
                 // Load more if at bottom
                 if (linearLayoutManager.findLastVisibleItemPosition() == mainAdapter.getItemCount() - 1) {
-                    presenter.loadMoreImages(MainActivity.this);
+                    presenter.loadMoreImages();
                 }
 
                 // Mark seen images
                 int seenIndex = linearLayoutManager.findFirstVisibleItemPosition();
                 if (seenIndex > 0) {
-                    presenter.markViewed(MainActivity.this, mainAdapter.getItem(seenIndex));
+                    presenter.markViewed(mainAdapter.getItem(seenIndex));
                 }
             }
         });

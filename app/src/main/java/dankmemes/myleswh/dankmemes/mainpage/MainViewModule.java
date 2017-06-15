@@ -3,6 +3,7 @@ package dankmemes.myleswh.dankmemes.mainpage;
 import dagger.Module;
 import dagger.Provides;
 import dankmemes.myleswh.dankmemes.application.CustomScope;
+import dankmemes.myleswh.dankmemes.database.DBHelper;
 import dankmemes.myleswh.dankmemes.network.GalleryAPI;
 import dankmemes.myleswh.dankmemes.utils.OnItemClickListener;
 import retrofit2.Retrofit;
@@ -35,8 +36,8 @@ public class MainViewModule {
 
     @Provides
     @CustomScope
-    public MainActivityContract.Presenter provideProfilePresenter(GalleryAPI galleryAPI) {
-        return new MainPresenter(view, galleryAPI);
+    public MainActivityContract.Presenter provideProfilePresenter(GalleryAPI galleryAPI, DBHelper dbHelper) {
+        return new MainPresenter(view, galleryAPI, dbHelper);
     }
 
     @Provides

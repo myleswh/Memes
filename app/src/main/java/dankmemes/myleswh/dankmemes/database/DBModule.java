@@ -12,7 +12,6 @@ import dagger.Provides;
  */
 @Module
 public class DBModule {
-
     @Singleton
     @Provides
     public DBHelper provideDBHelper(Context context) {
