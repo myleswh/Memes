@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
         ButterKnife.bind(this);
         inject();
         initView();
-        presenter.loadImageUrls();
+        presenter.loadImageUrls(this);
     }
 
     private void initView() {
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                presenter.loadImageUrls();
+                presenter.loadImageUrls(MainActivity.this);
             }
         });
     }
@@ -59,19 +59,25 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
+                // Load more if at bottom
                 if (linearLayoutManager.findLastVisibleItemPosition() == mainAdapter.getItemCount() - 1) {
-                    presenter.loadMoreImages();
+                    presenter.loadMoreImages(MainActivity.this);
                 }
 
+                // Mark seen images
+                int seenIndex = linearLayoutManager.findFirstVisibleItemPosition();
+                if (seenIndex > 0) {
+                    presenter.markViewed(MainActivity.this, mainAdapter.getItem(seenIndex));
+                }
             }
         });
     }
 
     private void inject() {
-        DaggerMainViewComponent.builder()
-                .mainViewModule(new MainViewModule(this, this))
-                .networkComponent(((DankApplication)getApplication()).getNetworkComponent())
-                .build().inject(this);
+        ((DankApplication)getApplication())
+                .getApplicationComponent()
+                .plus(new MainViewModule(this, this))
+                .inject(this);
     }
 
     @Override

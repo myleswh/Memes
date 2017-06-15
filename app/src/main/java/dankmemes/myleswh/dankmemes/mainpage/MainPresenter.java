@@ -1,16 +1,19 @@
 package dankmemes.myleswh.dankmemes.mainpage;
 
+import android.content.Context;
+
 import java.util.List;
 
 import javax.inject.Inject;
 
+import dankmemes.myleswh.dankmemes.database.LocalDBHelper;
+import dankmemes.myleswh.dankmemes.database.LocalDBHelperRx;
 import dankmemes.myleswh.dankmemes.network.GalleryAPI;
 import dankmemes.myleswh.dankmemes.network.GalleryModel;
 import io.reactivex.Observable;
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
-import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
@@ -21,7 +24,7 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * Created by myleswh on 06/06/2017.
  */
-public class MainPresenter implements MainActivityContract.Presenter {
+        public class MainPresenter implements MainActivityContract.Presenter {
 
     private MainActivityContract.View view;
     private GalleryAPI galleryAPI;
@@ -35,13 +38,12 @@ public class MainPresenter implements MainActivityContract.Presenter {
     }
 
     @Override
-    public void loadImageUrls() {
+    public void loadImageUrls(Context context) {
         currentPage = 0;
-        loadImages(currentPage, true);
+        loadImages(context, currentPage, true);
     }
 
-
-    private void loadImages(final int page, final boolean clear) {
+    private void loadImages(final Context context, final int page, final boolean clear) {
         // If already running Ignore TODO find more elegant way to do this?
         if (networkDisposable!=null && !networkDisposable.isDisposed()) return;
 
@@ -71,6 +73,13 @@ public class MainPresenter implements MainActivityContract.Presenter {
                     @Override
                     public String apply(@NonNull GalleryModel.Datum datum) throws Exception {
                         return datum.link;
+                    }
+                })
+                .filter(new Predicate<String>() {
+                    @Override
+                    public boolean test(@NonNull String s) throws Exception {
+                        // Filter seen images
+                        return !LocalDBHelper.hasSeenImage(context, s);
                     }
                 })
                 .toList()
@@ -109,8 +118,8 @@ public class MainPresenter implements MainActivityContract.Presenter {
     }
 
     @Override
-    public void loadMoreImages() {
-        loadImages(currentPage, false);
+    public void loadMoreImages(Context context) {
+        loadImages(context, currentPage, false);
     }
 
     @Override
@@ -119,4 +128,20 @@ public class MainPresenter implements MainActivityContract.Presenter {
             networkDisposable.dispose();
         }
     }
+
+    @Override
+    public void markViewed(Context context, String url) {
+        LocalDBHelperRx.getInsertObservable(context, url).subscribe();
+    }
+
+    @Override
+    public void clearViewed(Context context) {
+        LocalDBHelperRx.getClearObservable(context).subscribe();
+    }
+
+    @Override
+    public void setShowViewed(boolean showViewed) {
+
+    }
+
 }

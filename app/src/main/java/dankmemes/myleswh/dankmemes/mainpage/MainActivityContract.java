@@ -1,5 +1,7 @@
 package dankmemes.myleswh.dankmemes.mainpage;
 
+import android.content.Context;
+
 import java.util.List;
 
 /**
@@ -14,8 +16,11 @@ public class MainActivityContract {
     }
 
     public interface Presenter {
-        public void loadImageUrls();
-        public void loadMoreImages();
+        public void loadImageUrls(Context context);
+        public void loadMoreImages(Context context);
         public void dispose();
+        public void markViewed(Context context, String url);
+        public void clearViewed(Context context);
+        public void setShowViewed(boolean showViewed);
     }
 }
