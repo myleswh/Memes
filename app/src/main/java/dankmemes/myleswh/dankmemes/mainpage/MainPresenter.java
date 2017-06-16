@@ -110,10 +110,11 @@ public class MainPresenter implements MainActivityContract.Presenter {
                     }
 
                     @Override
-                    public void onSuccess(List<String> objects) {
+                    public void onSuccess(List<String> imageUrls) {
                         if (clear) view.clearImageUrls();
-                        view.addImages(objects);
+                        view.addImages(imageUrls);
                         currentPage = page + 1;
+
                     }
 
                     @Override
@@ -149,6 +150,7 @@ public class MainPresenter implements MainActivityContract.Presenter {
     public void toggleShowViewed() {
         showViewed = !showViewed;
         sharedPrefHelper.setBoolean(SHOW_VIEWED, showViewed);
+        view.notifyShowViewedChange(showViewed);
     }
 
 }

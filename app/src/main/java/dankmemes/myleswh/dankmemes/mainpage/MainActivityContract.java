@@ -11,6 +11,7 @@ public class MainActivityContract {
         public void addImages(List<String> urls);
         public void setLoading(boolean loading);
         public void setLoadingMore(boolean loadingMore);
+        public void notifyShowViewedChange(boolean toogle);
     }
 
     public interface Presenter {

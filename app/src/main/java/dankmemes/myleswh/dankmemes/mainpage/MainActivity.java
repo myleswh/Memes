@@ -53,10 +53,23 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
         floatingActionButtonClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.clearViewed();
                 Toast.makeText(getApplicationContext(), "Cleared", Toast.LENGTH_SHORT).show();
+                presenter.clearViewed();
+                clearThenLoad();
             }
         });
+        floatingActionButtonToggle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.toggleShowViewed();
+                clearThenLoad();
+            }
+        });
+    }
+
+    private void clearThenLoad() {
+        mainAdapter.clearImages();
+        presenter.loadImageUrls();
     }
 
     private void initSwipeRefresh() {
@@ -117,6 +130,11 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
     @Override
     public void setLoadingMore(boolean loadingMore) {
 
+    }
+
+    @Override
+    public void notifyShowViewedChange(boolean toggle) {
+        Toast.makeText(this, toggle ? "Showing Viewed" : "Hiding Viewed", Toast.LENGTH_SHORT).show();
     }
 
     @Override
