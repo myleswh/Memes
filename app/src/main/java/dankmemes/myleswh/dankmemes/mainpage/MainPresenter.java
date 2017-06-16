@@ -21,7 +21,7 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * Created by myleswh on 06/06/2017.
  */
-        public class MainPresenter implements MainActivityContract.Presenter {
+public class MainPresenter implements MainActivityContract.Presenter {
 
     private MainActivityContract.View view;
     private GalleryAPI galleryAPI;

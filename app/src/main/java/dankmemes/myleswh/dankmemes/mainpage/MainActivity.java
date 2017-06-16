@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
 
                 // Mark seen images
                 int seenIndex = linearLayoutManager.findFirstVisibleItemPosition();
-                if (seenIndex > 0) {
+                if (seenIndex >= 0) {
                     presenter.markViewed(mainAdapter.getItem(seenIndex));
                 }
             }
