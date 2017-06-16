@@ -34,7 +34,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:' + appcompat_version
     compile 'com.android.support:recyclerview-v7:' + appcompat_version
     compile "com.android.support:support-v4:" + appcompat_version
-
     // Rx
     compile 'io.reactivex.rxjava2:rxjava:2.0.6'
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
@@ -51,5 +50,8 @@ dependencies {
     compile 'com.squareup.retrofit2:adapter-rxjava2:' + retrofit_version
     // Image Library
     compile 'com.github.bumptech.glide:glide:' + glide_version
+    // Circle menu
+    compile 'com.getbase:floatingactionbutton:1.10.1'
+
 
 }

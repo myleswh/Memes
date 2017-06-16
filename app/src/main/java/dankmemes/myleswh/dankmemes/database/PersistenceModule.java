@@ -11,10 +11,16 @@ import dagger.Provides;
  * Created by myleswh on 15/06/2017.
  */
 @Module
-public class DBModule {
+public class PersistenceModule {
     @Singleton
     @Provides
     public DBHelper provideDBHelper(Context context) {
         return new DBHelper(context);
+    }
+
+    @Singleton
+    @Provides
+    public SharedPrefHelper provideSharedPrefHelper(Context context) {
+        return new SharedPrefHelper(context);
     }
 }

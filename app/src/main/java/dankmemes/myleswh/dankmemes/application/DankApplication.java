@@ -2,7 +2,7 @@ package dankmemes.myleswh.dankmemes.application;
 
 import android.app.Application;
 
-import dankmemes.myleswh.dankmemes.database.DBModule;
+import dankmemes.myleswh.dankmemes.database.PersistenceModule;
 import dankmemes.myleswh.dankmemes.network.NetworkModule;
 
 
@@ -23,10 +23,9 @@ public class DankApplication extends Application {
     private void initDagger() {
         applicationComponent = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
-                .dBModule(new DBModule())
+                .persistenceModule(new PersistenceModule())
                 .networkModule(new NetworkModule())
                 .build();
-
     }
 
     public ApplicationComponent getApplicationComponent() {

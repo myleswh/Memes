@@ -6,6 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Toast;
+
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
 import java.util.List;
 
@@ -23,6 +27,9 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
     @BindView(R.id.rvMain) RecyclerView recyclerView;
     @BindView(R.id.pbLoading) View pbLoading;
     @BindView(R.id.swipeRefresh) SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.floatingActionMenu) FloatingActionsMenu floatingActionsMenu;
+    @BindView(R.id.bClearMenu) FloatingActionButton floatingActionButtonClear;
+    @BindView(R.id.bToggle) FloatingActionButton floatingActionButtonToggle;
     @Inject MainActivityContract.Presenter presenter;
     @Inject MainAdapter mainAdapter;
 
@@ -39,6 +46,17 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
     private void initView() {
         initRecyclerView();
         initSwipeRefresh();
+        initMenu();
+    }
+
+    private void initMenu() {
+        floatingActionButtonClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.clearViewed();
+                Toast.makeText(getApplicationContext(), "Cleared", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void initSwipeRefresh() {
@@ -116,4 +134,5 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
         String url = mainAdapter.getItem(position);
         ShareUtils.shareUrl(this, url);
     }
+
 }

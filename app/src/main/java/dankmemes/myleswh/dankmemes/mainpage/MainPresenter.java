@@ -5,6 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import dankmemes.myleswh.dankmemes.database.DBHelper;
+import dankmemes.myleswh.dankmemes.database.SharedPrefHelper;
 import dankmemes.myleswh.dankmemes.network.GalleryAPI;
 import dankmemes.myleswh.dankmemes.network.GalleryModel;
 import io.reactivex.Observable;
@@ -23,17 +24,23 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class MainPresenter implements MainActivityContract.Presenter {
 
+    private static final String SHOW_VIEWED = "showViewed";
+
     private MainActivityContract.View view;
     private GalleryAPI galleryAPI;
     private DBHelper dbHelper;
     private int currentPage = 0;
     private Disposable networkDisposable;
+    private SharedPrefHelper sharedPrefHelper;
+    private boolean showViewed;
 
     @Inject
-    public MainPresenter(MainActivityContract.View view, GalleryAPI galleryAPI, DBHelper dbHelper) {
+    public MainPresenter(MainActivityContract.View view, GalleryAPI galleryAPI, DBHelper dbHelper, SharedPrefHelper sharedPrefHelper) {
         this.view = view;
         this.galleryAPI = galleryAPI;
         this.dbHelper = dbHelper;
+        this.sharedPrefHelper = sharedPrefHelper;
+        this.showViewed = sharedPrefHelper.getBoolean(SHOW_VIEWED, false);
     }
 
     @Override
@@ -78,7 +85,7 @@ public class MainPresenter implements MainActivityContract.Presenter {
                     @Override
                     public boolean test(@NonNull String url) throws Exception {
                         // Filter seen images
-                        return !dbHelper.hasSeenImage(url);
+                        return showViewed || !dbHelper.hasSeenImage(url);
                     }
                 })
                 .toList()
@@ -139,8 +146,9 @@ public class MainPresenter implements MainActivityContract.Presenter {
     }
 
     @Override
-    public void setShowViewed(boolean showViewed) {
-        // TOOD
+    public void toggleShowViewed() {
+        showViewed = !showViewed;
+        sharedPrefHelper.setBoolean(SHOW_VIEWED, showViewed);
     }
 
 }

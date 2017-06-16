@@ -19,6 +19,6 @@ public class MainActivityContract {
         public void dispose();
         public void markViewed(String url);
         public void clearViewed();
-        public void setShowViewed(boolean showViewed);
+        public void toggleShowViewed();
     }
 }

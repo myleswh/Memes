@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.getbase.floatingactionbutton.FloatingActionsMenu
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/floatingActionMenu"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    fab:fab_addButtonColorNormal="@color/colorAccent"
+    fab:fab_addButtonColorPressed="@color/colorAccent"
+    fab:fab_addButtonPlusIconColor="@android:color/white"
+    fab:fab_labelStyle="@style/menu_labels_style"
+    android:layout_gravity="bottom|right"
+    android:layout_marginBottom="64dp"
+    android:layout_marginRight="16dp"
+    android:layout_marginEnd="16dp"
+    tools:showIn="@layout/activity_main">
+
+    <com.getbase.floatingactionbutton.FloatingActionButton
+        android:id="@+id/bClearMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        fab:fab_colorNormal="@color/colorAccent"
+        fab:fab_title="Clear seen"
+        fab:fab_size="mini"
+        fab:fab_icon="@drawable/ic_layers_clear_black_24dp"
+        fab:fab_colorPressed="@color/colorAccent"/>
+
+    <com.getbase.floatingactionbutton.FloatingActionButton
+        android:id="@+id/bToggle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        fab:fab_colorNormal="@color/colorAccent"
+        fab:fab_title="Toggle seen"
+        fab:fab_size="mini"
+        fab:fab_icon="@drawable/ic_loop_black"
+        fab:fab_colorPressed="@color/colorAccent"/>
+</com.getbase.floatingactionbutton.FloatingActionsMenu>
