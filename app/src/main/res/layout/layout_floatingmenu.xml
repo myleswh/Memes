@@ -21,7 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         fab:fab_colorNormal="@color/colorAccent"
-        fab:fab_title="Clear seen"
+        fab:fab_title="Clear viewed"
         fab:fab_size="mini"
         fab:fab_icon="@drawable/ic_layers_clear_black_24dp"
         fab:fab_colorPressed="@color/colorAccent"/>
@@ -31,8 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         fab:fab_colorNormal="@color/colorAccent"
-        fab:fab_title="Toggle seen"
-        fab:fab_size="mini"
+        fab:fab_title=""
         fab:fab_icon="@drawable/ic_loop_black"
         fab:fab_colorPressed="@color/colorAccent"/>
 </com.getbase.floatingactionbutton.FloatingActionsMenu>

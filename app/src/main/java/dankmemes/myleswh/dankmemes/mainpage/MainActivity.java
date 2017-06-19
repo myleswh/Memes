@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
         inject();
         initView();
         presenter.loadImageUrls();
+        presenter.requestInitialState();
     }
 
     private void initView() {
@@ -133,8 +134,8 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
     }
 
     @Override
-    public void notifyShowViewedChange(boolean toggle) {
-        Toast.makeText(this, toggle ? "Showing Viewed" : "Hiding Viewed", Toast.LENGTH_SHORT).show();
+    public void notifyShowViewedChange(boolean viewed) {
+        floatingActionButtonToggle.setTitle(viewed ? "Showing Viewed" : "Hiding Viewed");
     }
 
     @Override

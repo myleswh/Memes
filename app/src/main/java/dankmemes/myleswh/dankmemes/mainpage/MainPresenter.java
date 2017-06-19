@@ -44,6 +44,11 @@ public class MainPresenter implements MainActivityContract.Presenter {
     }
 
     @Override
+    public void requestInitialState() {
+        view.notifyShowViewedChange(showViewed);
+    }
+
+    @Override
     public void loadImageUrls() {
         currentPage = 0;
         loadImages(currentPage, true);
@@ -152,5 +157,6 @@ public class MainPresenter implements MainActivityContract.Presenter {
         sharedPrefHelper.setBoolean(SHOW_VIEWED, showViewed);
         view.notifyShowViewedChange(showViewed);
     }
+
 
 }
