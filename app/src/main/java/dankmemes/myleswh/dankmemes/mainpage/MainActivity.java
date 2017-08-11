@@ -139,6 +139,11 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
     }
 
     @Override
+    public void onError() {
+        Toast.makeText(this, "An error occurred", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         presenter.dispose();

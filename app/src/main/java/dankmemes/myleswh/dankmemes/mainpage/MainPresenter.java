@@ -124,6 +124,7 @@ public class MainPresenter implements MainActivityContract.Presenter {
 
                     @Override
                     public void onError(Throwable e) {
+                        view.onError();
                         e.printStackTrace();
                     }
                 });
