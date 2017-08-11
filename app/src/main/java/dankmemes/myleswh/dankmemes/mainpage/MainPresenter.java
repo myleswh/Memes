@@ -86,13 +86,13 @@ public class MainPresenter implements MainActivityContract.Presenter {
                         return datum.link;
                     }
                 })
-                .filter(new Predicate<String>() {
-                    @Override
-                    public boolean test(@NonNull String url) throws Exception {
-                        // Filter seen images
-                        return showViewed || !dbHelper.hasSeenImage(url);
-                    }
-                })
+//                .filter(new Predicate<String>() {
+//                    @Override
+//                    public boolean test(@NonNull String url) throws Exception {
+//                        // Filter seen images
+//                        return showViewed || !dbHelper.hasSeenImage(url);
+//                    }
+//                })
                 .toList()
                 .observeOn(AndroidSchedulers.mainThread())
                 .doAfterTerminate(new Action() {
