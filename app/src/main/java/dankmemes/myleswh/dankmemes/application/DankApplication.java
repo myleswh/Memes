@@ -2,6 +2,8 @@ package dankmemes.myleswh.dankmemes.application;
 
 import android.app.Application;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import dankmemes.myleswh.dankmemes.database.PersistenceModule;
 import dankmemes.myleswh.dankmemes.network.NetworkModule;
 
@@ -13,11 +15,17 @@ import dankmemes.myleswh.dankmemes.network.NetworkModule;
 public class DankApplication extends Application {
 
     private ApplicationComponent applicationComponent;
+    private FirebaseAnalytics firebaseAnalytics;
 
     @Override
     public void onCreate() {
         super.onCreate();
         initDagger();
+        initAnalytics();
+    }
+
+    private void initAnalytics() {
+         firebaseAnalytics = FirebaseAnalytics.getInstance(this);
     }
 
     private void initDagger() {

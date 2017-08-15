@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "478077082043",
+    "firebase_url": "https://dankmemes-572ec.firebaseio.com",
+    "project_id": "dankmemes-572ec",
+    "storage_bucket": "dankmemes-572ec.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:478077082043:android:947f384b1847a529",
+        "android_client_info": {
+          "package_name": "dankmemes.myleswh.dankmemes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "478077082043-ipks34prk4be883a0r7aum8rruvam0b8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "dankmemes.myleswh.dankmemes",
+            "certificate_hash": "00f2fdef9523cfb743e4b14489c9137c05299ccf"
+          }
+        },
+        {
+          "client_id": "478077082043-g6ejj3omppv342js1lskt476co2tqfho.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRzJhLIPeHxfS-3hPFFqq0on8gec51Dbw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "478077082043-g6ejj3omppv342js1lskt476co2tqfho.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
