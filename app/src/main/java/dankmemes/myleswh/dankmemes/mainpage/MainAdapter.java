@@ -20,7 +20,10 @@ import dankmemes.myleswh.dankmemes.R;
  * Created by myleswh on 06/06/2017.
  */
 
-public class MainAdapter extends RecyclerView.Adapter<MainViewHolder> {
+public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    private static final int TYPE_ITEM = 0;
+    private static final int TYPE_EMPTY_VIEW = 1;
 
     private List<String> items = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
@@ -30,14 +33,28 @@ public class MainAdapter extends RecyclerView.Adapter<MainViewHolder> {
     }
 
     @Override
-    public MainViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
-        return new MainViewHolder(inflater.inflate(R.layout.listitem_main, parent, false), onItemClickListener);
+        switch (viewType) {
+            case TYPE_EMPTY_VIEW:
+                return new EmptyViewHolder(inflater.inflate(R.layout.listitem_main_empty, parent, false));
+            case TYPE_ITEM:
+                return new MainViewHolder(inflater.inflate(R.layout.listitem_main, parent, false), onItemClickListener);
+            default:
+                throw new IllegalStateException("invalid viewType");
+        }
+
     }
 
     @Override
-    public void onBindViewHolder(final MainViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+        // Only bind TYPE_ITEM
+        if (holder.getItemViewType() != TYPE_ITEM) return;
+        bindMainViewHolder((MainViewHolder) holder, position);
+    }
+
+    private void bindMainViewHolder(final MainViewHolder holder, int position) {
         String item = items.get(position);
 
         holder.getPbLoading().setVisibility(View.VISIBLE);
@@ -59,11 +76,15 @@ public class MainAdapter extends RecyclerView.Adapter<MainViewHolder> {
                     }
                 })
                 .into(holder.getImageView());
-
     }
 
     @Override
     public int getItemCount() {
+        // Shows empty view
+        if (items.size() == 0) {
+            return 1;
+        }
+
         return items.size();
     }
 
@@ -89,4 +110,15 @@ public class MainAdapter extends RecyclerView.Adapter<MainViewHolder> {
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (items.size() == 0) {
+            return TYPE_EMPTY_VIEW;
+        } else {
+            return TYPE_ITEM;
+        }
+    }
+
+
 }

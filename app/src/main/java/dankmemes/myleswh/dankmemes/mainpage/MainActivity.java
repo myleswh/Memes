@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
 
                 // Mark seen images
                 int seenIndex = linearLayoutManager.findFirstVisibleItemPosition();
-                if (seenIndex >= 0) {
+                if (seenIndex >= 0 && mainAdapter.getListSize() > 0) {
                     presenter.markViewed(mainAdapter.getItem(seenIndex));
                 }
             }
@@ -140,7 +140,8 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
 
     @Override
     public void onError() {
-        Toast.makeText(this, "An error occurred", Toast.LENGTH_LONG).show();
+        mainAdapter.notifyDataSetChanged();
+        Toast.makeText(this, R.string.main_load_error_text, Toast.LENGTH_LONG).show();
     }
 
     @Override

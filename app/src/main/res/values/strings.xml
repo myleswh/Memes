@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Dank Memes</string>
+    <string name="listitem_main_empty_text">No memes here :(\nswipe down to load more</string>
+    <string name="main_load_error_text">An error occurred :(</string>
 </resources>

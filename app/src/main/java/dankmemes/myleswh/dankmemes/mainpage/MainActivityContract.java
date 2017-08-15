@@ -12,6 +12,7 @@ public class MainActivityContract {
         public void setLoading(boolean loading);
         public void setLoadingMore(boolean loadingMore);
         public void notifyShowViewedChange(boolean viewed);
+        public void onError();
     }
 
     public interface Presenter {
